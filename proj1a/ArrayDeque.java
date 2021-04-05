@@ -9,7 +9,7 @@ public class ArrayDeque<T> {
 
     // build a constructor//
     public ArrayDeque() {
-        T[] items = (T[]) new Object[8];
+        items = (T[]) new Object[8];
         nextFirst = 4;
         nextLast = 5;
         size = 0;
@@ -30,8 +30,14 @@ public class ArrayDeque<T> {
         return index - 1;
     }
 
-    public void addFirst(T item) {
+    public void expand() {
+        if(size == items.length) {
+            resize();
+        }
+    }
 
+
+    public void addFirst(T item) {
         items[nextFirst] = item;
         nextFirst = minusone(nextFirst);
         size += 1;
@@ -39,11 +45,10 @@ public class ArrayDeque<T> {
         if (nextFirst < 0) {
             nextFirst = items.length - 1;
         }
-        resize();
+        expand();
     }
 
     public void addLast(T item) {
-
         items[nextLast] = item;
         nextLast = plusone(nextLast);
         size += 1;
@@ -51,7 +56,7 @@ public class ArrayDeque<T> {
         if (nextLast > items.length) {
             nextLast = 0;
         }
-        resize();
+        expand();
     }
 
     public boolean isEmpty() {
@@ -131,7 +136,7 @@ public class ArrayDeque<T> {
     public void printDeque() {
         //use while rather than for !!!//
         int currentindex = plusone(nextFirst);
-        while (currentindex != nextLast ) {
+        while (currentindex != nextLast) {
             System.out.print(items[currentindex] + " ");
             currentindex = plusone(currentindex);
         }
@@ -143,7 +148,6 @@ public class ArrayDeque<T> {
         ArrayDeque A = new ArrayDeque();
         A.addLast(16);
         A.addFirst(13);
-        System.out.println(A.get(0));
+        A.get(0);
     }
-
 }
