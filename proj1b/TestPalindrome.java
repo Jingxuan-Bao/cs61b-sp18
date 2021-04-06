@@ -1,9 +1,9 @@
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+// use junit library to debug!.//
+
 public class TestPalindrome {
-    /*// You must use this palindrome, and not instantiate
-    // new Palindromes, or the autograder might be upset.
     static Palindrome palindrome = new Palindrome();
 
     @Test
@@ -14,5 +14,21 @@ public class TestPalindrome {
             actual += d.removeFirst();
         }
         assertEquals("persiflage", actual);
-    } Uncomment this class once you've created your Palindrome class. */
+    }
+
+    //The isPalindrome method should return true if the given word is a palindrome, and false otherwise.
+    //A palindrome is defined as a word that is the same whether it is read forwards or backwards.
+    //For example “a”, “racecar”, and “noon” are all palindromes. “horse”, “rancor”,
+    // and “aaaaab” are not palindromes. Any word of length 1 or 0 is a palindrome.
+
+
+    //Tip: As an example, assertFalse(palindrome.isPalindrome("cat"));
+    // tests to ensure that “cat” is not considered a palindrome.
+    @Test
+    public void isPalindrome() {
+        String a = " ";
+        String a2 = "racecar";
+        assertTrue(palindrome.isPalindrome(a));
+        assertTrue(palindrome.isPalindrome(a2));
+    }
 }
