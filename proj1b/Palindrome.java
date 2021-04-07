@@ -18,7 +18,7 @@ public class Palindrome {
 
     //a method to check whether the string word is palindrome or not.//
 
-    public boolean help(LinkedListDeque<Character> d) {
+    public boolean help(Deque<Character> d) {
         if (d.size() == 0 || d.size() == 1) {
             return true;
         }
@@ -34,10 +34,30 @@ public class Palindrome {
 
     public boolean isPalindrome(String word) {
 
-        LinkedListDeque<Character> deque = (LinkedListDeque<Character>) wordToDeque(word);
+        Deque<Character> deque = (Deque<Character>) wordToDeque(word);
         return help(deque);
     }
 
+    //In this task, your ultimate goal is to add //
+    // a third public method to your Palindrome class with the following signature://
 
 
+    public boolean isPalindromeHelper(Deque<Character> d, CharacterComparator cc) {
+        if (d.size() == 0 || d.size() == 1) {
+            return true;
+        }
+        Character first = d.removeFirst();
+        Character last = d.removeLast();
+        if(cc.equalChars(first,last)) {
+            return isPalindromeHelper(d, cc);
+        }
+        else {
+            return false;
+        }
+    }
+
+    public boolean isPalindrome(String word, CharacterComparator cc) {
+        Deque<Character> d = wordToDeque(word);
+        return isPalindromeHelper(d, cc);
+    }
 }
