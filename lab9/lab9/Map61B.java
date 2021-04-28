@@ -13,11 +13,6 @@ public interface Map61B<K, V> extends Iterable<K> {
      */
     V get(K key);
 
-    /* Returns true if this map contains a mapping for the specified key. */
-    default boolean containsKey(K key) {
-        return get(key) != null;
-    }
-
     /* Associates the specified value with the specified key in this map. */
     void put(K key, V value);
 
@@ -36,4 +31,9 @@ public interface Map61B<K, V> extends Iterable<K> {
      * the specified value. Not required for Lab 9. If you don't implement this,
      * throw an UnsupportedOperationException.*/
     V remove(K key, V value);
+
+    default boolean containsKey(K key) {
+        return get(key) != null;
+    }
+
 }

@@ -6,7 +6,7 @@ import java.util.Set;
 /**
  * Implementation of interface Map61B with BST as core data structure.
  *
- * @author Your name here
+ * @author prad
  */
 public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
 
@@ -44,7 +44,17 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
      *  or null if this map contains no mapping for the key.
      */
     private V getHelper(K key, Node p) {
-        throw new UnsupportedOperationException();
+        if (p == null) {
+            return null;
+        }
+        int compareResult = key.compareTo(p.key);
+        if (compareResult == 0) {
+            return p.value;
+        } else if (compareResult < 0) {
+            return getHelper(key, p.left);
+        } else {
+            return getHelper(key, p.right);
+        }
     }
 
     /** Returns the value to which the specified key is mapped, or null if this
@@ -52,14 +62,28 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
      */
     @Override
     public V get(K key) {
-        throw new UnsupportedOperationException();
+        V value = getHelper(key, root);
+        return value;
     }
 
     /** Returns a BSTMap rooted in p with (KEY, VALUE) added as a key-value mapping.
-      * Or if p is null, it returns a one node BSTMap containing (KEY, VALUE).
+     * Or if p is null, it returns a one node BSTMap containing (KEY, VALUE).
      */
     private Node putHelper(K key, V value, Node p) {
-        throw new UnsupportedOperationException();
+        if (p == null) {
+            this.size = this.size + 1;
+            Node n = new Node(key, value);
+            return n;
+        }
+        int compareResult = key.compareTo(p.key);
+        if (compareResult == 0) {
+            p.value = value;
+        } else if (compareResult < 0) {
+            p.left = putHelper(key, value, p.left);
+        } else {
+            p.right = putHelper(key, value, p.right);
+        }
+        return p;
     }
 
     /** Inserts the key KEY
@@ -67,13 +91,13 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
      */
     @Override
     public void put(K key, V value) {
-        throw new UnsupportedOperationException();
+        root = putHelper(key, value, root);
     }
 
     /* Returns the number of key-value mappings in this map. */
     @Override
     public int size() {
-        throw new UnsupportedOperationException();
+        return this.size;
     }
 
     //////////////// EVERYTHING BELOW THIS LINE IS OPTIONAL ////////////////
@@ -84,13 +108,64 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         throw new UnsupportedOperationException();
     }
 
+    private Node min(Node n) {
+        if (n.left == null) {
+            return n;
+        } else {
+            return min(n.left);
+        }
+    }
+
+    private Node deleteMin(Node n) {
+        if (n.left == null) {
+            return n.right;
+        } else {
+            n.left = deleteMin(n.left);
+            return n;
+        }
+    }
+
+    private Node deleteHelper(Node n, K key) {
+        if (n == null) {
+            return null;
+        }
+        int c = key.compareTo(n.key);
+        if (c < 0) {
+            n.left = deleteHelper(n.left, key);
+        } else if (c > 0) {
+            n.right = deleteHelper(n.right, key);
+        } else {
+            if (n.left == null) {
+                return n.right;
+            } else if (n.right == null) {
+                return n.left;
+            } else {
+                // 1. 当n的left和right都有子树时, 先从right中找到最小的Node;
+                // 2. 把它作为新的n节点, left指向原先的left树
+                // 3. right指向原先的right树删除最小Node后的新的树
+                Node t = n;
+                n = min(t.right);
+                n.left = t.left;
+                n.right = deleteMin(t.right);
+            }
+        }
+        return n;
+    }
+
+    private void delete(K key) {
+        size -= 1;
+        root = deleteHelper(root, key);
+    }
+
     /** Removes KEY from the tree if present
      *  returns VALUE removed,
      *  null on failed removal.
      */
     @Override
     public V remove(K key) {
-        throw new UnsupportedOperationException();
+        V value = get(key);
+        delete(key);
+        return value;
     }
 
     /** Removes the key-value entry for the specified key only if it is
