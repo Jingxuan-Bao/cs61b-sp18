@@ -33,7 +33,7 @@ public class TestNiceSpreadOomage {
      * run this and it should pass.*/
     @Test
     public void testRandomOomagesHashCodeSpread() {
-        List<Oomage> oomages = new ArrayList<>();
+        List<Oomage> oomages = new ArrayList<Oomage>();
         int N = 10000;
 
         for (int i = 0; i < N; i += 1) {
