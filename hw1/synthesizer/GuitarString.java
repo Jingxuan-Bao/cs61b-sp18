@@ -21,7 +21,7 @@ public class GuitarString {
         int capacity = (int) Math.round(SR / frequency);
 
         //ArrayRingBuffer is a BoundedQueue.//
-        buffer = new ArrayRingBuffer<>(capacity);
+        buffer = new ArrayRingBuffer<double> (capacity);
         for (int i = 0; i < buffer.capacity(); i++) {
             buffer.enqueue(0.0);
         }

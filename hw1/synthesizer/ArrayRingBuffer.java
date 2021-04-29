@@ -91,31 +91,27 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
         return new MyIterator();
     }
 
-    public class MyIterator implements Iterator<T> {
+    private class MyIterator implements Iterator<T> {
 
         private int current;
         private int count;
 
         public MyIterator() {
-            this.current = first;
-            this.count = 0;
+            current = first;
+            count = 0;
         }
 
         @Override
         public boolean hasNext() {
-            return current != last;
+            return count < capacity;
         }
 
         @Override
         public T next() {
-            T returnitem = rb[current];
-            current = (current + 1) % capacity;
-            return returnitem;
-        }
-
-        @Override
-        public Iterator<T> iterator() {
-            return new MyIterator();
+            T ret = rb[current];
+            current += 1;
+            count += 1;
+            return ret;
         }
     }
 }
