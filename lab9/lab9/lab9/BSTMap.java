@@ -6,7 +6,7 @@ import java.util.Set;
 /**
  * Implementation of interface Map61B with BST as core data structure.
  *
- * @author prad
+ *
  */
 public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
 
@@ -140,9 +140,6 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
             } else if (n.right == null) {
                 return n.left;
             } else {
-                // 1. 当n的left和right都有子树时, 先从right中找到最小的Node;
-                // 2. 把它作为新的n节点, left指向原先的left树
-                // 3. right指向原先的right树删除最小Node后的新的树
                 Node t = n;
                 n = min(t.right);
                 n.left = t.left;
